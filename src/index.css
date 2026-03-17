@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@keyframes horizontal-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-scroll {
+  animation: horizontal-scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.hover\:pause:hover {
+  animation-play-state: paused;
+}
