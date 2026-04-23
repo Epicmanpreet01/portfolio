@@ -6,7 +6,11 @@ const useOnScreen = (options) => {
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
-      setIsVisible(entry.isIntersecting);
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+        // Stop observing once visible — animation only fires once
+        if (ref.current) observer.unobserve(ref.current);
+      }
     }, options);
 
     if (ref.current) observer.observe(ref.current);

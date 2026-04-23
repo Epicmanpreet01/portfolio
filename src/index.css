@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Hide native scrollbar — custom one rendered via React */
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
 @keyframes horizontal-scroll {
   from {
     transform: translateX(0);

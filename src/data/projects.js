@@ -1,6 +1,7 @@
 const PROJECTS_DATA = {
   featured: [
     {
+      id: "futureguard",
       title: "FutureGuard",
       desc: "An enterprise-grade full-stack ML platform for student dropout risk prediction with dashboards, CSV ingestion, explainable AI, and role-based workflows.",
       tags: ["React", "Node.js", "MongoDB", "FastAPI", "ML"],
@@ -9,6 +10,7 @@ const PROJECTS_DATA = {
       repo: "https://github.com/Epicmanpreet01/future-guard",
     },
     {
+      id: "winpet",
       title: "WinPet",
       desc: "A desktop companion tray app with animated characters, modular assets, persistent config, and smooth UI behaviors.",
       tags: ["PySide6", "Python", "Desktop App"],
@@ -19,6 +21,7 @@ const PROJECTS_DATA = {
   ],
   noteworthy: [
     {
+      id: "facial-detection",
       title: "Real-Time Facial Age & Gender Detection",
       desc: "Streamlit demo using YOLOv11 and a multi-head CNN for accurate detection, alignment, and prediction in real time.",
       tags: ["Python", "Computer Vision", "YOLO", "Deep Learning"],

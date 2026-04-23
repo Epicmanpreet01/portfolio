@@ -205,7 +205,7 @@ const Hero = ({ setView, theme }) => {
             <div className="flex flex-wrap gap-4">
               <MagneticButton
                 onClick={() => setView("about")}
-                className={`px-8 py-4 rounded-full ${theme.text} ${theme.bg} border ${theme.cardBorder} font-bold shadow-sm hover:shadow-xl transition-all flex items-center gap-2 group`}
+                className={`px-8 py-4 rounded-full ${theme.btnPrimary} font-bold shadow-sm hover:shadow-xl transition-all flex items-center gap-2 group border`}
               >
                 More About Me{" "}
                 <ArrowRight
@@ -215,7 +215,7 @@ const Hero = ({ setView, theme }) => {
               </MagneticButton>
               <MagneticButton
                 onClick={() => setView("work")}
-                className={`px-8 py-4 rounded-full ${theme.textMuted} border ${theme.cardBorder} hover:${theme.text} transition-all flex items-center gap-2 group`}
+                className={`px-8 py-4 rounded-full ${theme.btnSecondary} font-medium transition-all flex items-center gap-2 group border`}
               >
                 View Projects
                 <ArrowRight
@@ -244,7 +244,7 @@ const Hero = ({ setView, theme }) => {
             >
               <div className="relative z-10 flex justify-between items-start mb-4">
                 <div
-                  className={`p-4 rounded-2xl ${theme.bg} shadow-sm border ${theme.cardBorder}`}
+                  className={`p-4 rounded-2xl ${theme.cardBg} shadow-sm border ${theme.cardBorder}`}
                 >
                   <Code size={32} className={theme.accent} />
                 </div>
@@ -279,7 +279,7 @@ const Hero = ({ setView, theme }) => {
                 </div>
 
                 <div
-                  className={`absolute bottom-4 -right-6 px-4 py-3 rounded-lg border ${status.border} ${theme.bg} shadow-2xl flex items-center gap-3 z-20 transition-all duration-500 ease-out ${
+                  className={`absolute bottom-4 -right-6 px-4 py-3 rounded-lg border ${status.border} ${theme.cardBg} shadow-2xl flex items-center gap-3 z-20 transition-all duration-500 ease-out ${
                     status.bounce ? "animate-bounce-slow" : "translate-y-0"
                   }`}
                 >

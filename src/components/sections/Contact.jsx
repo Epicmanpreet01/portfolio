@@ -2,7 +2,7 @@ import { Mail, Github, Linkedin, Globe } from "lucide-react";
 import Reveal from "../ui/Reveal";
 import MagneticButton from "../ui/MagneticButton";
 
-const Contact = ({ isSummary = false, theme }) => {
+const Contact = ({ isSummary = false, theme, setView }) => {
   return (
     <section
       className={`px-6 flex items-center ${
@@ -12,7 +12,7 @@ const Contact = ({ isSummary = false, theme }) => {
       <div className="max-w-4xl mx-auto text-center w-full">
         <Reveal>
           <h2 className={`text-5xl md:text-7xl font-bold mb-8 ${theme.text}`}>
-            Let’s build something meaningful.
+            Let’s build <span className={`${theme.accent} italic`}>something meaningful.</span>
           </h2>
 
           <p className={`text-xl mb-12 max-w-2xl mx-auto ${theme.textMuted}`}>
@@ -22,10 +22,13 @@ const Contact = ({ isSummary = false, theme }) => {
 
           {/* Primary CTA */}
           <MagneticButton
-            onClick={() =>
-              window.open("mailto:manpreet210028@gmail.com", "_blank")
-            }
-            className={`inline-flex items-center gap-3 px-10 py-5 rounded-full text-white font-bold text-lg transition-all hover:scale-105 shadow-2xl shadow-orange-500/30 ${theme.accentBg} ${theme.accentHover}`}
+            onClick={() => {
+              if (setView) {
+                setView("contact");
+                window.scrollTo(0, 0);
+              }
+            }}
+            className={`inline-flex items-center gap-3 px-10 py-5 rounded-full text-white font-bold text-lg transition-all hover:scale-105 shadow-2xl ${theme.accentShadow} ${theme.accentBg} ${theme.accentHover}`}
           >
             <Mail size={22} />
             Say Hello
@@ -37,7 +40,7 @@ const Contact = ({ isSummary = false, theme }) => {
               onClick={() =>
                 window.open("https://github.com/epicmanpreet01", "_blank")
               }
-              className={`p-4 rounded-full ${theme.cardBg} border ${theme.cardBorder} ${theme.textMuted} hover:${theme.accent} hover:border-orange-500/50 transition-all`}
+              className={`p-4 rounded-full ${theme.btnSecondary} transition-all`}
             >
               <Github size={24} />
             </MagneticButton>
@@ -49,7 +52,7 @@ const Contact = ({ isSummary = false, theme }) => {
                   "_blank",
                 )
               }
-              className={`p-4 rounded-full ${theme.cardBg} border ${theme.cardBorder} ${theme.textMuted} hover:${theme.accent} hover:border-orange-500/50 transition-all`}
+              className={`p-4 rounded-full ${theme.btnSecondary} transition-all`}
             >
               <Linkedin size={24} />
             </MagneticButton>

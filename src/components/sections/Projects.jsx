@@ -72,7 +72,7 @@ const Projects = ({ setView, isSummary = false, theme }) => {
               {PROJECTS_DATA.noteworthy.map((project, idx) => (
                 <Reveal key={idx} delay={idx * 50}>
                   <div
-                    className={`p-6 rounded-2xl border ${theme.cardBorder} ${theme.cardBg} hover:border-orange-500/50 transition-all h-full flex flex-col justify-between`}
+                    className={`p-6 rounded-2xl border ${theme.cardBorder} ${theme.cardBg} ${theme.accentBorderHover} transition-all h-full flex flex-col justify-between`}
                   >
                     <div>
                       <div className="flex justify-between items-start mb-4">
@@ -117,10 +117,13 @@ const Projects = ({ setView, isSummary = false, theme }) => {
         <Reveal>
           <div className="flex items-end justify-between mb-20">
             <div>
+              <h3 className={`text-xs font-bold uppercase tracking-[0.2em] mb-2 ${theme.accent}`}>
+                Portfolio
+              </h3>
               <h2
-                className={`text-4xl md:text-6xl font-bold mb-4 ${theme.text}`}
+                className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-4 ${theme.text}`}
               >
-                Selected Work
+                Selected <span className={`${theme.accent} italic`}>Work</span>
               </h2>
               <p className={theme.textMuted}>
                 A collection of projects that define my career.
@@ -128,7 +131,7 @@ const Projects = ({ setView, isSummary = false, theme }) => {
             </div>
             <MagneticButton
               onClick={() => setView("work")}
-              className={`px-6 py-3 rounded-full border ${theme.cardBorder} ${theme.text} hover:bg-neutral-100 dark:hover:bg-neutral-800 font-bold transition-all hidden md:block`}
+              className={`px-6 py-3 rounded-full ${theme.btnSecondary} font-bold transition-all hidden md:block`}
             >
               View All Projects
             </MagneticButton>
@@ -189,11 +192,18 @@ const Projects = ({ setView, isSummary = false, theme }) => {
                     }`}
                   >
                     <MagneticButton
-                      className={`p-4 rounded-full border ${theme.cardBorder} hover:border-orange-500 hover:bg-orange-500 hover:text-white transition-all ${theme.text}`}
+                      onClick={() => project.repo && window.open(project.repo, "_blank")}
+                      className={`p-4 rounded-full ${theme.btnSecondary} transition-all`}
                     >
                       <Github size={20} />
                     </MagneticButton>
                     <MagneticButton
+                      onClick={() => {
+                        if (project.id) {
+                          setView(`project-${project.id}`);
+                          window.scrollTo(0, 0);
+                        }
+                      }}
                       className={`px-6 py-4 rounded-full bg-neutral-900 text-white font-medium hover:bg-neutral-800 transition-all flex items-center gap-2`}
                     >
                       View Case Study <ArrowUpRight size={18} />
@@ -202,51 +212,6 @@ const Projects = ({ setView, isSummary = false, theme }) => {
                 </div>
               </div>
             </Reveal>
-          ))}
-        </div>
-        <Reveal>
-          <h3 className={`text-2xl font-bold mb-12 ${theme.text}`}>
-            Noteworthy Mentions
-          </h3>
-        </Reveal>
-      </div>
-      <div className="relative w-full overflow-hidden">
-        <div className="flex animate-scroll hover:pause gap-6 w-max">
-          {[
-            ...PROJECTS_DATA.noteworthy,
-            ...PROJECTS_DATA.noteworthy,
-            ...PROJECTS_DATA.noteworthy,
-          ].map((project, idx) => (
-            <div
-              key={idx}
-              className={`w-[300px] p-6 rounded-2xl border ${theme.cardBorder} ${theme.cardBg} hover:border-orange-500/50 transition-colors flex-shrink-0`}
-            >
-              <div className="flex justify-between items-start mb-4">
-                <div className={theme.accent}>
-                  <Layout size={24} />
-                </div>
-                <ExternalLink
-                  size={18}
-                  className={`${theme.textMuted} hover:${theme.text}`}
-                />
-              </div>
-              <h4 className={`text-xl font-bold mb-2 ${theme.text}`}>
-                {project.title}
-              </h4>
-              <p className={`text-sm mb-4 ${theme.textMuted}`}>
-                {project.desc}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className={`text-xs ${theme.textMuted} opacity-70`}
-                  >
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            </div>
           ))}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Zap } from "lucide-react";
 
 import Reveal from "../ui/Reveal";
 import SKILLS_DATA from "../../data/skills";
@@ -52,11 +53,35 @@ const Skills = ({ isSummary = false, theme, setView }) => {
   return (
     <section className={`py-32 px-6 ${!isSummary ? "min-h-screen pt-40" : ""}`}>
       <div className="max-w-7xl mx-auto">
-        <Reveal>
-          <h2 className={`text-3xl md:text-5xl font-bold mb-12 ${theme.text}`}>
-            Technical Arsenal
-          </h2>
-        </Reveal>
+        {isSummary ? (
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
+            <Reveal>
+              <h3 className={`text-xs font-bold uppercase tracking-[0.2em] mb-2 ${theme.accent}`}>
+                Expertise
+              </h3>
+              <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold ${theme.text}`}>
+                Technical <span className={`${theme.accent} italic`}>Arsenal</span>
+              </h2>
+            </Reveal>
+            <Reveal delay={200}>
+              <MagneticButton
+                onClick={() => setView("skills")}
+                className={`px-6 py-3 rounded-full ${theme.btnSecondary} font-bold transition-all text-sm`}
+              >
+                See all skills
+              </MagneticButton>
+            </Reveal>
+          </div>
+        ) : (
+          <Reveal>
+            <h3 className={`text-xs font-bold uppercase tracking-[0.2em] mb-2 ${theme.accent}`}>
+              Technical Proficiency
+            </h3>
+            <h2 className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-12 ${theme.text}`}>
+              Technical <span className={`${theme.accent} italic`}>Arsenal</span>
+            </h2>
+          </Reveal>
+        )}
 
         {/* CATEGORY BAR (HIDDEN IN SUMMARY MODE) */}
         {!isSummary && (
@@ -92,9 +117,9 @@ const Skills = ({ isSummary = false, theme, setView }) => {
         {/* ================= SUMMARY MODE ================= */}
         {isSummary ? (
           <Reveal delay={200}>
-            <div className="relative overflow-hidden py-8">
-              {/* Edge fade only (no new colors added) */}
-              <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] space-y-8">
+            {/* Break out of max-w container to be full viewport width */}
+            <div className="relative overflow-hidden py-4 w-screen left-1/2 -translate-x-1/2">
+              <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] space-y-4 px-4">
                 <style
                   dangerouslySetInnerHTML={{
                     __html: `
@@ -115,27 +140,27 @@ const Skills = ({ isSummary = false, theme, setView }) => {
                   return (
                     <div
                       key={lane}
-                      className="flex gap-6 w-max hover:[animation-play-state:paused]"
+                      className="flex gap-4 w-max hover:[animation-play-state:paused]"
                       style={{
                         animation: `${
                           reverse ? "scroll-right" : "scroll-left"
-                        } 300s linear infinite`,
+                        } 600s linear infinite`,
                       }}
                     >
                       {loopItems.map((skill, idx) => (
                         <div
                           key={`${lane}-${skill.name}-${idx}`}
-                          className={`w-56 flex-shrink-0 group p-6 rounded-2xl border ${theme.cardBorder} ${theme.cardBg} hover:border-orange-500/50 transition-all duration-300 flex flex-col items-center gap-4 text-center`}
+                          className={`flex-shrink-0 group px-5 py-2.5 rounded-full border ${theme.cardBorder} ${theme.cardBg} hover:border-orange-500/40 transition-all duration-300 flex items-center gap-2.5 hover:-translate-y-1 cursor-default`}
                           title={skill.name}
                         >
                           <div
-                            className={`p-4 rounded-xl ${theme.bg} ${theme.textMuted} group-hover:${theme.accent} transition-colors`}
+                            className={`w-4 h-4 flex items-center justify-center ${theme.textMuted} group-hover:text-orange-500 transition-colors [&>svg]:w-full [&>svg]:h-full`}
                           >
                             {skill.icon}
                           </div>
 
                           <span
-                            className={`font-medium ${theme.text} w-full truncate`}
+                            className={`text-sm font-bold ${theme.textMuted} group-hover:${theme.text} transition-colors whitespace-nowrap`}
                           >
                             {skill.name}
                           </span>
@@ -149,40 +174,61 @@ const Skills = ({ isSummary = false, theme, setView }) => {
           </Reveal>
         ) : (
           /* ================= TILE MODE ================= */
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {filteredSkills.map((skill, idx) => (
-              <Reveal key={skill.name + activeTab} delay={idx * 50}>
-                <div
-                  className={`group p-4 rounded-xl border ${theme.cardBorder} ${theme.cardBg} hover:border-orange-500/50 transition-all duration-300 hover:-translate-y-1 flex flex-col items-center gap-3 text-center`}
-                  title={skill.name}
-                >
-                  <div
-                    className={`p-3 rounded-full ${theme.bg} ${theme.textMuted} group-hover:${theme.accent} transition-colors`}
-                  >
-                    {skill.icon}
-                  </div>
-                  <span
-                    className={`font-medium ${theme.text} w-full truncate px-2`}
-                  >
-                    {skill.name}
-                  </span>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        )}
+          <>
+            {/* Core Expertise Header */}
+            <Reveal delay={100}>
+              <div className="flex items-baseline gap-3 mb-8">
+                <h3 className={`text-2xl font-bold italic ${theme.text}`}>
+                  Core Expertise
+                </h3>
+                <span className={`text-sm italic ${theme.textMuted}`}>
+                  Primary Focus & Systems Mastery
+                </span>
+              </div>
+            </Reveal>
 
-        {isSummary && (
-          <Reveal delay={400}>
-            <div className="mt-10 flex justify-center">
-              <MagneticButton
-                onClick={() => setView("skills")}
-                className={`px-6 py-3 rounded-full border ${theme.cardBorder} ${theme.cardBg} ${theme.text} hover:${theme.accent} transition-all font-medium`}
-              >
-                See all skills →
-              </MagneticButton>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-20">
+              {filteredSkills.map((skill, idx) => (
+                <Reveal key={skill.name + activeTab} delay={idx * 30}>
+                  <div
+                    className={`group p-6 rounded-2xl border ${theme.cardBorder} ${theme.cardBg} hover:border-orange-500/40 transition-all duration-300 flex flex-col items-center gap-4 text-center cursor-default`}
+                    title={skill.name}
+                  >
+                    <div
+                      className={`p-3 rounded-full ${theme.textMuted} group-hover:text-orange-500 transition-colors duration-300 [&>svg]:w-7 [&>svg]:h-7`}
+                    >
+                      {React.cloneElement(skill.icon, { size: 28 })}
+                    </div>
+                    <div>
+                      <span
+                        className={`font-bold text-sm ${theme.text} block mb-1`}
+                      >
+                        {skill.name}
+                      </span>
+                      <span
+                        className={`text-[10px] font-bold uppercase tracking-[0.15em] ${theme.accent}`}
+                      >
+                        {skill.category}
+                      </span>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
             </div>
-          </Reveal>
+
+            {/* Continuous Learning Header */}
+            <Reveal delay={100}>
+              <div className="flex items-baseline gap-3 mb-8">
+                <h3 className={`text-2xl font-bold italic ${theme.text}`}>
+                  Continuous Learning
+                </h3>
+                <span className={`text-sm italic ${theme.textMuted}`}>
+                  Actively Developing & Future Systems
+                </span>
+              </div>
+            </Reveal>
+
+          </>
         )}
       </div>
     </section>
