@@ -14,35 +14,29 @@ import ProjectDetail from "./pages/ProjectDetail";
 import Skills from "./components/sections/Skills";
 
 // ── URL ↔ View mapping ──────────────────────────────────
-const BASE_PATH = "/portfolio";
-
 const viewToPath = (view) => {
-  if (view === "home") return `${BASE_PATH}/`;
-  if (view.startsWith("project-")) return `${BASE_PATH}/project/${view.replace("project-", "")}`;
-  return `${BASE_PATH}/${view}`;
+  if (view === "home") return "/";
+  if (view.startsWith("project-")) return `/project/${view.replace("project-", "")}`;
+  return `/${view}`;
 };
 
 const pathToView = (path) => {
-  // Normalize path
-  let p = path.toLowerCase().replace(/\/$/, "");
+  // Normalize path by removing trailing slashes
+  const p = path.replace(/\/$/, "") || "/";
   
-  // If path is root, base, or base/
-  if (p === "" || p === "/" || p === BASE_PATH || p === `${BASE_PATH}/`) {
+  if (p === "/" || p === "") {
     return "home";
   }
 
-  // Handle project detail paths
   if (p.includes("/project/")) {
     return `project-${p.split("/project/").pop()}`;
   }
 
-  // Check for other views (about, work, etc) regardless of prefix
-  const segments = p.split("/");
-  const lastSegment = segments[segments.length - 1];
+  // Check if the last segment matches a known view
+  const segment = p.split("/").pop();
   const validViews = ["about", "skills", "work", "contact"];
-  
-  if (validViews.includes(lastSegment)) {
-    return lastSegment;
+  if (validViews.includes(segment)) {
+    return segment;
   }
 
   return "home";
