@@ -21,9 +21,25 @@ const viewToPath = (view) => {
 };
 
 const pathToView = (path) => {
-  if (path === "/" || path === "") return "home";
-  if (path.startsWith("/project/")) return `project-${path.replace("/project/", "")}`;
-  return path.replace("/", "");
+  // Normalize path by removing trailing slashes
+  const p = path.replace(/\/$/, "") || "/";
+  
+  if (p === "/" || p === "" || p.toLowerCase().includes("portfolio")) {
+    return "home";
+  }
+
+  if (p.includes("/project/")) {
+    return `project-${p.split("/project/").pop()}`;
+  }
+
+  // Check if the last segment matches a known view
+  const segment = p.split("/").pop();
+  const validViews = ["about", "skills", "work", "contact"];
+  if (validViews.includes(segment)) {
+    return segment;
+  }
+
+  return "home";
 };
 
 export default function App() {
