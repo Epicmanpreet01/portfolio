@@ -2,35 +2,46 @@ import { ArrowUpRight } from "lucide-react";
 import Reveal from "../components/ui/Reveal";
 import MagneticButton from "../components/ui/MagneticButton";
 import PROJECTS_DATA from "../data/projects";
-
-const allProjects = [...PROJECTS_DATA.featured, ...PROJECTS_DATA.noteworthy];
+import FeaturedProjects from "../components/sections/FeaturedProjects";
 
 const WorkPage = ({ theme, setView }) => {
+  // Use the 'featured' and 'noteworthy' split from PROJECTS_DATA
+  const featuredProjects = PROJECTS_DATA.featured;
+  const otherProjects = PROJECTS_DATA.noteworthy;
+
   return (
-    <div className="pt-32 pb-20 px-6">
+    <div className="pt-40 pb-20 px-6">
       <div className="max-w-7xl mx-auto">
-        {/* HEADING */}
-        <Reveal>
-          <h2
-            className={`text-xs font-bold uppercase tracking-[0.2em] mb-4 ${theme.accent}`}
-          >
-            Archive
-          </h2>
-          <h3
-            className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${theme.text}`}
-          >
-            Product &{" "}
-            <span className={`${theme.accent} italic`}>Systems</span>
-          </h3>
-          <p className={`text-lg mb-16 ${theme.textMuted} max-w-xl`}>
-            Deep dives into the systems I've architected, the models I've
-            trained, and the products I've shipped.
-          </p>
-        </Reveal>
+        {/* FEATURED SECTION */}
+        <FeaturedProjects 
+          projects={featuredProjects} 
+          theme={theme} 
+          setView={setView} 
+        />
+
+        {/* ARCHIVE / ALL PROJECTS HEADING */}
+        <div className="mt-32 mb-16">
+          <Reveal>
+            <h2
+              className={`text-xs font-bold uppercase tracking-[0.2em] mb-4 ${theme.accent}`}
+            >
+              Full Catalog
+            </h2>
+            <h3
+              className={`text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${theme.text}`}
+            >
+              Other <span className={`${theme.accent} italic`}>Projects</span>
+            </h3>
+            <p className={`text-lg ${theme.textMuted} max-w-xl`}>
+              A comprehensive archive of deep dives into the systems I've architected, the models I've
+              trained, and the experiments I've shipped.
+            </p>
+          </Reveal>
+        </div>
 
         {/* PROJECT LIST */}
         <div className="space-y-6">
-          {allProjects.map((project, idx) => (
+          {otherProjects.map((project, idx) => (
             <Reveal key={project.title} delay={idx * 60}>
               <div
                 onClick={() => {

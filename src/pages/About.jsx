@@ -5,13 +5,14 @@ import EXPERIENCE_DATA from "../data/experience";
 
 const EDUCATION_DATA = [
   {
-    degree: "B.Sc. Computer Science (Hons.)",
-    institution: "Chandigarh University",
-    period: "2023 – 2026",
+    degree: "B.Tech Computer Science Engineering (Data Science)",
+    institution: "Chandigarh Group Of Colleges Landran",
+    period: "2023 – 2027",
     desc: "Focused on software engineering, data structures, algorithms, and applied machine learning. Built multiple full-stack and AI-driven projects throughout the program.",
   },
 ];
 
+// eslint-disable-next-line no-unused-vars
 const AboutPage = ({ theme, isDarkMode }) => {
   return (
     <div className="pt-32 pb-20 px-6">

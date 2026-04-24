@@ -47,7 +47,7 @@ const themeConfig = {
     btnPrimary: "bg-white text-[#0A0A0A] border-white",
     btnSecondary: "bg-transparent text-neutral-200 border-neutral-700 hover:bg-neutral-800/50",
 
-    navBg: "bg-[#0A0A0A]/80",
+    navBg: "bg-[#1A1A1A]/95",
     accent: "text-orange-500",
     accentBg: "bg-orange-500",
     accentHover: "hover:bg-orange-600",

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ExternalLink, X, ChevronLeft, ChevronRight } from "lucide-react";
 import Reveal from "../components/ui/Reveal";
 import MagneticButton from "../components/ui/MagneticButton";
-import PROJECT_DETAILS from "../data/projectDetails";
+import { PROJECT_DETAILS } from "../data/projects";
 
 const ProjectDetail = ({ projectId, theme, isDarkMode, setView }) => {
   const project = PROJECT_DETAILS[projectId];
@@ -17,6 +17,14 @@ const ProjectDetail = ({ projectId, theme, isDarkMode, setView }) => {
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
   }, []);
+
+  // Notify NavBar when gallery opens/closes
+  useEffect(() => {
+    const event = new CustomEvent("galleryStateChange", {
+      detail: { isOpen: !!selectedImage },
+    });
+    window.dispatchEvent(event);
+  }, [selectedImage]);
 
   if (!project) {
     return (

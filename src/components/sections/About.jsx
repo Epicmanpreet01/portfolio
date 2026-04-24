@@ -8,6 +8,8 @@ import {
   Briefcase,
 } from "lucide-react";
 
+import profileImg from "../../assets/me.webp";
+
 import Reveal from "../ui/Reveal";
 import MagneticButton from "../ui/MagneticButton";
 
@@ -25,7 +27,7 @@ const About = ({ setView, isSummary = false, theme, isDarkMode }) => {
               >
                 <div className="aspect-square rounded-2xl overflow-hidden mb-6 bg-neutral-100">
                   <img
-                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Alex&backgroundColor=ffdfbf"
+                    src={profileImg}
                     alt="Manpreet Singh"
                     className="w-full h-full object-cover"
                   />
@@ -43,9 +45,7 @@ const About = ({ setView, isSummary = false, theme, isDarkMode }) => {
                     >
                       <MapPin size={16} />
                     </div>
-                    <span className={theme.text}>
-                      India (Remote-Friendly)
-                    </span>
+                    <span className={theme.text}>India (Remote-Friendly)</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <div
@@ -53,9 +53,7 @@ const About = ({ setView, isSummary = false, theme, isDarkMode }) => {
                     >
                       <Mail size={16} />
                     </div>
-                    <span className={theme.text}>
-                      manpreet210028@gmail.com
-                    </span>
+                    <span className={theme.text}>manpreet210028@gmail.com</span>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
                     <div
@@ -80,10 +78,7 @@ const About = ({ setView, isSummary = false, theme, isDarkMode }) => {
                 <div className="mt-6 pt-6 border-t border-neutral-200 dark:border-neutral-800 flex justify-center gap-4">
                   <MagneticButton
                     onClick={() =>
-                      window.open(
-                        "https://github.com/epicmanpreet01",
-                        "_blank",
-                      )
+                      window.open("https://github.com/epicmanpreet01", "_blank")
                     }
                     className={`p-3 rounded-full ${theme.btnSecondary} transition-all`}
                   >
@@ -126,9 +121,9 @@ const About = ({ setView, isSummary = false, theme, isDarkMode }) => {
                     <span className={`${theme.text} font-medium`}>
                       full-stack and AI-focused engineer
                     </span>{" "}
-                    who builds end-to-end systems — from scalable web
-                    interfaces and robust backend services to machine learning
-                    pipelines and desktop applications.
+                    who builds end-to-end systems — from scalable web interfaces
+                    and robust backend services to machine learning pipelines
+                    and desktop applications.
                   </p>
 
                   <p>
@@ -137,8 +132,8 @@ const About = ({ setView, isSummary = false, theme, isDarkMode }) => {
                       full-stack platforms
                     </span>
                     , analytics dashboards, AI-driven prediction systems, and
-                    real-time computer vision tools. Much of my work sits at
-                    the intersection of software engineering and{" "}
+                    real-time computer vision tools. Much of my work sits at the
+                    intersection of software engineering and{" "}
                     <span className={`${theme.text} font-medium`}>
                       applied machine learning
                     </span>

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Send } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import Reveal from "../components/ui/Reveal";
 import MagneticButton from "../components/ui/MagneticButton";
 
@@ -13,16 +14,33 @@ const ContactPage = ({ theme }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Open mailto with pre-filled fields
-    const subject = encodeURIComponent(`Portfolio Contact from ${form.name}`);
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`,
-    );
-    window.open(
-      `mailto:manpreet210028@gmail.com?subject=${subject}&body=${body}`,
-    );
-    setStatus("sent");
-    setTimeout(() => setStatus(""), 3000);
+    setStatus("sending");
+
+    // Load EmailJS credentials from .env file
+    const serviceID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    const templateParams = {
+      from_name: form.name,
+      reply_to: form.email,
+      message: form.message,
+      to_name: "Manpreet", // You can customize this based on your EmailJS template
+    };
+
+    emailjs
+      .send(serviceID, templateID, templateParams, publicKey)
+      .then((response) => {
+        console.log("SUCCESS!", response.status, response.text);
+        setStatus("sent");
+        setForm({ name: "", email: "", message: "" });
+        setTimeout(() => setStatus(""), 3000);
+      })
+      .catch((err) => {
+        console.log("FAILED...", err);
+        setStatus("error");
+        setTimeout(() => setStatus(""), 3000);
+      });
   };
 
   return (
@@ -115,10 +133,18 @@ const ContactPage = ({ theme }) => {
             {/* SUBMIT */}
             <MagneticButton
               type="submit"
-              className={`px-8 py-3 rounded-full ${theme.btnSecondary} font-bold transition-all flex items-center gap-2 text-sm border`}
+              className={`px-8 py-3 rounded-full ${theme.btnSecondary} font-bold transition-all flex items-center gap-2 text-sm border ${
+                status === "sending" ? "opacity-70 cursor-not-allowed" : ""
+              }`}
             >
-              <Send size={16} />
-              {status === "sent" ? "Message Opened!" : "Send Message"}
+              <Send size={16} className={status === "sending" ? "animate-pulse" : ""} />
+              {status === "sending"
+                ? "Sending..."
+                : status === "sent"
+                ? "Message Sent!"
+                : status === "error"
+                ? "Failed to Send"
+                : "Send Message"}
             </MagneticButton>
           </form>
         </Reveal>

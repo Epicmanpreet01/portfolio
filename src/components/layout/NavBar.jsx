@@ -6,8 +6,15 @@ const NavBar = ({ currentView, setView, theme, isDarkMode, toggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [galleryOpen, setGalleryOpen] = useState(false);
   const lastScrollY = useRef(0);
   const scrollDownAccum = useRef(0);
+
+  useEffect(() => {
+    const handleGalleryState = (e) => setGalleryOpen(e.detail.isOpen);
+    window.addEventListener("galleryStateChange", handleGalleryState);
+    return () => window.removeEventListener("galleryStateChange", handleGalleryState);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -20,7 +27,7 @@ const NavBar = ({ currentView, setView, theme, isDarkMode, toggleTheme }) => {
       if (delta > 0) {
         // Scrolling down — accumulate distance
         scrollDownAccum.current += delta;
-        if (scrollDownAccum.current > 1000) {
+        if (scrollDownAccum.current > 600) {
           setHidden(true);
         }
       } else if (delta < 0) {
@@ -55,27 +62,46 @@ const NavBar = ({ currentView, setView, theme, isDarkMode, toggleTheme }) => {
     { label: "Contact", view: "contact" },
   ];
 
+  const isHidden = hidden || galleryOpen;
+
   return (
-    <nav className={`fixed w-full z-50 flex justify-center px-4 transition-all duration-500 ${hidden ? '-translate-y-full pt-4' : scrolled ? 'translate-y-0 pt-1' : 'translate-y-0 pt-4'}`}>
+    <nav
+      className={`fixed w-full z-50 flex justify-center px-4 transition-transform duration-700 ease-[cubic-bezier(0.68,-0.6,0.32,1.6)] ${
+        isHidden
+          ? "-translate-y-[150%] delay-[700ms] pt-4"
+          : "translate-y-0 delay-0 pt-4"
+      } ${scrolled && !isHidden ? "!pt-1" : ""}`}
+    >
       <div
-        className={`flex items-center justify-between w-full max-w-7xl px-6 py-3 rounded-full border transition-all duration-500 ${
-          scrolled
-            ? `${theme.navBg} backdrop-blur-xl ${theme.cardBorder} shadow-lg shadow-black/5`
-            : `${theme.navBg} backdrop-blur-xl ${theme.cardBorder} shadow-sm shadow-black/5`
+        className={`relative flex items-center justify-between h-[52px] overflow-hidden rounded-full border ${theme.navBg} backdrop-blur-xl ${theme.cardBorder} ${
+          isHidden
+            ? "w-[52px] max-w-[52px] !px-0"
+            : `w-full max-w-7xl px-6 ${
+                scrolled
+                  ? "shadow-lg shadow-black/5"
+                  : "shadow-sm shadow-black/5"
+              }`
         }`}
+        style={{
+          transitionProperty: "width, max-width, padding, background-color, border-color, box-shadow",
+          transitionDuration: "500ms, 500ms, 500ms, 300ms, 300ms, 300ms",
+          transitionTimingFunction: "cubic-bezier(0.4, 0, 0.2, 1)",
+          transitionDelay: isHidden ? "0ms" : "700ms, 700ms, 700ms, 0ms, 0ms, 0ms"
+        }}
       >
+        <div
+          className={`flex items-center justify-between w-full min-w-max transition-opacity duration-300 ${
+            isHidden ? "opacity-0 delay-0 pointer-events-none" : "opacity-100 delay-[900ms]"
+          }`}
+        >
         {/* Logo */}
         <div
           className="flex-shrink-0 cursor-pointer group"
           onClick={() => handleNav("home")}
         >
-          <span
-            className={`text-xl font-bold tracking-tighter ${theme.text}`}
-          >
+          <span className={`text-xl font-bold tracking-tighter ${theme.text}`}>
             Manpreet
-            <span
-              className={`${theme.accent} group-hover:px-1 transition-all`}
-            >
+            <span className={`${theme.accent} group-hover:px-1 transition-all`}>
               .
             </span>
             Singh
@@ -124,6 +150,7 @@ const NavBar = ({ currentView, setView, theme, isDarkMode, toggleTheme }) => {
           >
             {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
+        </div>
         </div>
       </div>
 

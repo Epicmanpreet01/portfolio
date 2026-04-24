@@ -189,22 +189,32 @@ const Skills = ({ isSummary = false, theme, setView }) => {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-20">
               {filteredSkills.map((skill, idx) => (
-                <Reveal key={skill.name + activeTab} delay={idx * 30}>
+                <Reveal key={skill.name + activeTab} delay={idx * 30} className="h-full">
                   <div
-                    className={`group p-6 rounded-2xl border ${theme.cardBorder} ${theme.cardBg} hover:border-orange-500/40 transition-all duration-300 flex flex-col items-center gap-4 text-center cursor-default`}
-                    title={skill.name}
+                    className={`group p-5 sm:p-6 rounded-2xl border ${theme.cardBorder} ${theme.cardBg} hover:border-orange-500/40 transition-all duration-300 flex flex-col items-center justify-between text-center cursor-default h-full min-h-[160px]`}
                   >
                     <div
                       className={`p-3 rounded-full ${theme.textMuted} group-hover:text-orange-500 transition-colors duration-300 [&>svg]:w-7 [&>svg]:h-7`}
                     >
                       {React.cloneElement(skill.icon, { size: 28 })}
                     </div>
-                    <div>
-                      <span
-                        className={`font-bold text-sm ${theme.text} block mb-1`}
-                      >
-                        {skill.name}
-                      </span>
+                    
+                    <div className="flex flex-col items-center justify-end w-full flex-grow mt-2">
+                      <div className="relative h-10 flex items-center justify-center w-full mb-1">
+                        {/* Base Text */}
+                        <span
+                          className={`font-bold ${theme.text} ${skill.name.length > 14 ? 'text-xs' : 'text-sm'} leading-tight line-clamp-2 w-full px-1`}
+                        >
+                          {skill.name}
+                        </span>
+                        
+                        {/* Hover Tooltip (Glassmorphism) */}
+                        <span
+                          className={`absolute top-1/2 -translate-y-1/2 font-bold text-white bg-neutral-900/95 backdrop-blur-md text-xs px-3 py-2 rounded-xl shadow-2xl z-20 opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-300 scale-95 group-hover:scale-100 w-max max-w-[180%]`}
+                        >
+                          {skill.name}
+                        </span>
+                      </div>
                       <span
                         className={`text-[10px] font-bold uppercase tracking-[0.15em] ${theme.accent}`}
                       >
