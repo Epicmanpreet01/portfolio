@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import { ExternalLink, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useParams, useNavigate } from "react-router-dom";
 import Reveal from "../components/ui/Reveal";
 import MagneticButton from "../components/ui/MagneticButton";
 import { PROJECT_DETAILS } from "../data/projects";
 
-const ProjectDetail = ({ projectId, theme, isDarkMode, setView }) => {
+const ProjectDetail = ({ theme, isDarkMode }) => {
+  const { projectId } = useParams();
+  const navigate = useNavigate();
   const project = PROJECT_DETAILS[projectId];
   const [selectedImage, setSelectedImage] = useState(null);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
@@ -33,7 +36,7 @@ const ProjectDetail = ({ projectId, theme, isDarkMode, setView }) => {
           Project Not Found
         </h1>
         <MagneticButton
-          onClick={() => setView("work")}
+          onClick={() => navigate("/work")}
           className={`px-6 py-3 rounded-full ${theme.btnSecondary} font-bold`}
         >
           Back to Projects
@@ -384,7 +387,7 @@ const ProjectDetail = ({ projectId, theme, isDarkMode, setView }) => {
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <MagneticButton
-              onClick={() => setView("work")}
+              onClick={() => navigate("/work")}
               className={`px-7 py-3 rounded-full border ${theme.cardBorder} ${theme.btnSecondary} font-semibold text-sm`}
             >
               Back to Work
@@ -393,7 +396,7 @@ const ProjectDetail = ({ projectId, theme, isDarkMode, setView }) => {
             {project.nextProject && (
               <MagneticButton
                 onClick={() => {
-                  setView(`project-${project.nextProject}`);
+                  navigate(`/project/${project.nextProject}`);
                   window.scrollTo(0, 0);
                 }}
                 className={`px-7 py-3 rounded-full ${theme.accentBg} text-white font-semibold text-sm hover:opacity-90 transition-opacity`}

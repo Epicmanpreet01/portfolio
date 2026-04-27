@@ -1,10 +1,13 @@
 import { ExternalLink, Layout, ArrowUpRight, Github } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import Reveal from "../ui/Reveal";
 import MagneticButton from "../ui/MagneticButton";
 import PROJECTS_DATA from "../../data/projects";
 
-const Projects = ({ setView, isSummary = false, theme }) => {
+const Projects = ({ isSummary = false, theme }) => {
+  const navigate = useNavigate();
+
   if (!isSummary) {
     return (
       <div className="pt-32 pb-20">
@@ -52,6 +55,11 @@ const Projects = ({ setView, isSummary = false, theme }) => {
                         {project.desc}
                       </p>
                       <MagneticButton
+                        onClick={() => {
+                          if (project.id) {
+                            navigate(`/project/${project.id}`);
+                          }
+                        }}
                         className={`px-4 py-2 rounded-full border ${theme.cardBorder} ${theme.text} hover:${theme.accent} transition-colors flex items-center gap-2 text-sm font-bold`}
                       >
                         View Project <ArrowUpRight size={16} />
@@ -130,7 +138,7 @@ const Projects = ({ setView, isSummary = false, theme }) => {
               </p>
             </div>
             <MagneticButton
-              onClick={() => setView("work")}
+              onClick={() => navigate("/work")}
               className={`px-6 py-3 rounded-full ${theme.btnSecondary} font-bold transition-all hidden md:block`}
             >
               View All Projects
@@ -200,7 +208,7 @@ const Projects = ({ setView, isSummary = false, theme }) => {
                     <MagneticButton
                       onClick={() => {
                         if (project.id) {
-                          setView(`project-${project.id}`);
+                          navigate(`/project/${project.id}`);
                           window.scrollTo(0, 0);
                         }
                       }}

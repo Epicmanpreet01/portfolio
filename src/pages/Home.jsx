@@ -4,28 +4,27 @@ import Skills from "../components/sections/Skills";
 import Projects from "../components/sections/Projects";
 import Contact from "../components/sections/Contact";
 
-const Home = ({ setView, theme, isDarkMode }) => {
+const Home = ({ theme, isDarkMode }) => {
   return (
     <>
       <div data-section="Hero">
-        <Hero setView={setView} theme={theme} />
+        <Hero theme={theme} />
       </div>
       <div data-section="About">
         <About
-          setView={setView}
           isSummary
           theme={theme}
           isDarkMode={isDarkMode}
         />
       </div>
       <div data-section="Skills">
-        <Skills isSummary theme={theme} setView={setView} />
+        <Skills isSummary theme={theme} />
       </div>
       <div data-section="Projects">
-        <Projects setView={setView} isSummary theme={theme} />
+        <Projects isSummary theme={theme} />
       </div>
       <div data-section="Contact">
-        <Contact isSummary theme={theme} setView={setView} />
+        <Contact isSummary theme={theme} />
       </div>
     </>
   );

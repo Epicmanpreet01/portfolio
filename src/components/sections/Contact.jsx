@@ -1,8 +1,11 @@
 import { Mail, Github, Linkedin, Globe } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Reveal from "../ui/Reveal";
 import MagneticButton from "../ui/MagneticButton";
 
-const Contact = ({ isSummary = false, theme, setView }) => {
+const Contact = ({ isSummary = false, theme }) => {
+  const navigate = useNavigate();
+
   return (
     <section
       className={`px-6 flex items-center ${
@@ -23,10 +26,8 @@ const Contact = ({ isSummary = false, theme, setView }) => {
           {/* Primary CTA */}
           <MagneticButton
             onClick={() => {
-              if (setView) {
-                setView("contact");
-                window.scrollTo(0, 0);
-              }
+              navigate("/contact");
+              window.scrollTo(0, 0);
             }}
             className={`inline-flex items-center gap-3 px-10 py-5 rounded-full text-white font-bold text-lg transition-all hover:scale-105 shadow-2xl ${theme.accentShadow} ${theme.accentBg} ${theme.accentHover}`}
           >

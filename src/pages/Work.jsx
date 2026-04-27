@@ -1,10 +1,12 @@
 import { ArrowUpRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Reveal from "../components/ui/Reveal";
 import MagneticButton from "../components/ui/MagneticButton";
 import PROJECTS_DATA from "../data/projects";
 import FeaturedProjects from "../components/sections/FeaturedProjects";
 
-const WorkPage = ({ theme, setView }) => {
+const WorkPage = ({ theme }) => {
+  const navigate = useNavigate();
   // Use the 'featured' and 'noteworthy' split from PROJECTS_DATA
   const featuredProjects = PROJECTS_DATA.featured;
   const otherProjects = PROJECTS_DATA.noteworthy;
@@ -16,7 +18,6 @@ const WorkPage = ({ theme, setView }) => {
         <FeaturedProjects 
           projects={featuredProjects} 
           theme={theme} 
-          setView={setView} 
         />
 
         {/* ARCHIVE / ALL PROJECTS HEADING */}
@@ -46,7 +47,7 @@ const WorkPage = ({ theme, setView }) => {
               <div
                 onClick={() => {
                   if (project.id) {
-                    setView(`project-${project.id}`);
+                    navigate(`/project/${project.id}`);
                     window.scrollTo(0, 0);
                   } else if (project.repo) {
                     window.open(project.repo, "_blank");

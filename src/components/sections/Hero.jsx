@@ -4,8 +4,10 @@ import MagneticButton from "../ui/MagneticButton";
 
 import React, { useState, useEffect } from "react";
 import { Loader2, PenLine } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const Hero = ({ setView, theme }) => {
+const Hero = ({ theme }) => {
+  const navigate = useNavigate();
   const [appState, setAppState] = useState("writing");
   const [charIndex, setCharIndex] = useState(0);
 
@@ -204,7 +206,7 @@ const Hero = ({ setView, theme }) => {
           <Reveal delay={600}>
             <div className="flex flex-wrap gap-4">
               <MagneticButton
-                onClick={() => setView("about")}
+                onClick={() => navigate("/about")}
                 className={`px-8 py-4 rounded-full ${theme.btnPrimary} font-bold shadow-sm hover:shadow-xl transition-all flex items-center gap-2 group border`}
               >
                 More About Me{" "}
@@ -214,7 +216,7 @@ const Hero = ({ setView, theme }) => {
                 />
               </MagneticButton>
               <MagneticButton
-                onClick={() => setView("work")}
+                onClick={() => navigate("/work")}
                 className={`px-8 py-4 rounded-full ${theme.btnSecondary} font-medium transition-all flex items-center gap-2 group border`}
               >
                 View Projects

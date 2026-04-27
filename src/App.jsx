@@ -1,4 +1,5 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import themeConfig from "./theme/themeConfig";
 
 import NavBar from "./components/layout/NavBar";
@@ -13,114 +14,58 @@ import Contact from "./pages/Contact";
 import ProjectDetail from "./pages/ProjectDetail";
 import Skills from "./components/sections/Skills";
 
-// ── URL ↔ View mapping ──────────────────────────────────
-const viewToPath = (view) => {
-  if (view === "home") return "/";
-  if (view.startsWith("project-")) return `/project/${view.replace("project-", "")}`;
-  return `/${view}`;
-};
-
-const pathToView = (path) => {
-  // Normalize path by removing trailing slashes
-  const p = path.replace(/\/$/, "") || "/";
-  
-  if (p === "/" || p === "") {
-    return "home";
-  }
-
-  if (p.includes("/project/")) {
-    return `project-${p.split("/project/").pop()}`;
-  }
-
-  // Check if the last segment matches a known view
-  const segment = p.split("/").pop();
-  const validViews = ["about", "skills", "work", "contact"];
-  if (validViews.includes(segment)) {
-    return segment;
-  }
-
-  return "home";
-};
-
 export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [currentView, setCurrentView] = useState(() =>
-    pathToView(window.location.pathname)
-  );
-
+  const location = useLocation();
   const theme = isDarkMode ? themeConfig.dark : themeConfig.light;
-
-  // Navigate: update state + push to browser history
-  const navigate = useCallback((view) => {
-    setCurrentView(view);
-    const path = viewToPath(view);
-    window.history.pushState({ view }, "", path);
-    window.scrollTo(0, 0);
-  }, []);
-
-  // Listen for browser back/forward
-  useEffect(() => {
-    const handlePopState = (e) => {
-      const view = e.state?.view || pathToView(window.location.pathname);
-      setCurrentView(view);
-      window.scrollTo(0, 0);
-    };
-
-    window.addEventListener("popstate", handlePopState);
-
-    // Replace initial history entry so it has state
-    window.history.replaceState(
-      { view: currentView },
-      "",
-      viewToPath(currentView)
-    );
-
-    return () => window.removeEventListener("popstate", handlePopState);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDarkMode);
   }, [isDarkMode]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <div className={`${theme.bg} min-h-screen`}>
-
       <AnimatedBackground theme={theme} isDarkMode={isDarkMode} />
 
       <NavBar
-        currentView={currentView}
-        setView={navigate}
         theme={theme}
         isDarkMode={isDarkMode}
         toggleTheme={() => setIsDarkMode(!isDarkMode)}
       />
 
-      <ScrollTimeline isDarkMode={isDarkMode} showBlob={currentView === "home"} />
+      <ScrollTimeline
+        isDarkMode={isDarkMode}
+        showBlob={location.pathname === "/"}
+      />
 
       <main className="relative z-10">
-        {currentView === "home" && (
-          <Home
-            setView={navigate}
-            theme={theme}
-            isDarkMode={isDarkMode}
+        <Routes>
+          <Route
+            path="/"
+            element={<Home theme={theme} isDarkMode={isDarkMode} />}
           />
-        )}
-        {currentView === "about" && (
-          <About theme={theme} isDarkMode={isDarkMode} />
-        )}
-        {currentView === "skills" && (
-          <Skills theme={theme} setView={navigate} />
-        )}
-        {currentView === "work" && <Work theme={theme} setView={navigate} />}
-        {currentView === "contact" && <Contact theme={theme} />}
-        {currentView.startsWith("project-") && (
-          <ProjectDetail
-            projectId={currentView.replace("project-", "")}
-            theme={theme}
-            isDarkMode={isDarkMode}
-            setView={navigate}
+          <Route
+            path="/about"
+            element={<About theme={theme} isDarkMode={isDarkMode} />}
           />
-        )}
+          <Route
+            path="/skills"
+            element={<Skills theme={theme} />}
+          />
+          <Route
+            path="/work"
+            element={<Work theme={theme} />}
+          />
+          <Route path="/contact" element={<Contact theme={theme} />} />
+          <Route
+            path="/project/:projectId"
+            element={<ProjectDetail theme={theme} isDarkMode={isDarkMode} />}
+          />
+        </Routes>
       </main>
     </div>
   );

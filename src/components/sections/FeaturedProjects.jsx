@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Reveal from "../ui/Reveal";
 import MagneticButton from "../ui/MagneticButton";
 
-const FeaturedProjects = ({ projects, theme, setView }) => {
+const FeaturedProjects = ({ projects, theme }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [slideshowIndices, setSlideshowIndices] = useState([0, 0, 0]);
   const [isSlideshowActive, setIsSlideshowActive] = useState(false);
   const slideshowTimer = useRef(null);
   const hoverThresholdTimer = useRef(null);
+  const navigate = useNavigate();
 
   // Take first 3 projects
   const featured = projects.slice(0, 3);
@@ -81,7 +83,7 @@ const FeaturedProjects = ({ projects, theme, setView }) => {
 
   const handleProjectClick = (project) => {
     if (project.id) {
-      setView(`project-${project.id}`);
+      navigate(`/project/${project.id}`);
       window.scrollTo(0, 0);
     }
   };

@@ -13,7 +13,10 @@ import profileImg from "../../assets/me.webp";
 import Reveal from "../ui/Reveal";
 import MagneticButton from "../ui/MagneticButton";
 
-const About = ({ setView, isSummary = false, theme, isDarkMode }) => {
+import { useNavigate } from "react-router-dom";
+
+const About = ({ isSummary = false, theme, isDarkMode }) => {
+  const navigate = useNavigate();
   return (
     <section
       className={`py-24 px-6 ${isDarkMode ? "bg-black/20" : "bg-white/30"} backdrop-blur-3xl`}
@@ -155,7 +158,7 @@ const About = ({ setView, isSummary = false, theme, isDarkMode }) => {
 
                   {isSummary && (
                     <MagneticButton
-                      onClick={() => setView("about")}
+                      onClick={() => navigate("/about")}
                       className={`mt-4 text-sm font-bold ${theme.accent} flex items-center gap-2`}
                     >
                       Read Full Bio <ArrowRight size={16} />

@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Zap } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 import Reveal from "../ui/Reveal";
 import SKILLS_DATA from "../../data/skills";
 import MagneticButton from "../ui/MagneticButton";
 
-const Skills = ({ isSummary = false, theme, setView }) => {
+const Skills = ({ isSummary = false, theme }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("All");
   const tabsRef = useRef([]);
   const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
@@ -65,7 +67,7 @@ const Skills = ({ isSummary = false, theme, setView }) => {
             </Reveal>
             <Reveal delay={200}>
               <MagneticButton
-                onClick={() => setView("skills")}
+                onClick={() => navigate("/skills")}
                 className={`px-6 py-3 rounded-full ${theme.btnSecondary} font-bold transition-all text-sm`}
               >
                 See all skills

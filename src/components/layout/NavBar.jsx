@@ -1,14 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import { Menu, X, Sun, Moon } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 import MagneticButton from "../ui/MagneticButton";
 
-const NavBar = ({ currentView, setView, theme, isDarkMode, toggleTheme }) => {
+const NavBar = ({ theme, isDarkMode, toggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const lastScrollY = useRef(0);
   const scrollDownAccum = useRef(0);
+  
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleGalleryState = (e) => setGalleryOpen(e.detail.isOpen);
@@ -48,18 +52,18 @@ const NavBar = ({ currentView, setView, theme, isDarkMode, toggleTheme }) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNav = (view) => {
-    setView(view);
+  const handleNav = (path) => {
+    navigate(path);
     setIsMenuOpen(false);
     window.scrollTo(0, 0);
   };
 
   const navItems = [
-    { label: "Home", view: "home" },
-    { label: "About", view: "about" },
-    { label: "Skills", view: "skills" },
-    { label: "Projects", view: "work" },
-    { label: "Contact", view: "contact" },
+    { label: "Home", path: "/" },
+    { label: "About", path: "/about" },
+    { label: "Skills", path: "/skills" },
+    { label: "Projects", path: "/work" },
+    { label: "Contact", path: "/contact" },
   ];
 
   const isHidden = hidden || galleryOpen;
@@ -97,7 +101,7 @@ const NavBar = ({ currentView, setView, theme, isDarkMode, toggleTheme }) => {
         {/* Logo */}
         <div
           className="flex-shrink-0 cursor-pointer group"
-          onClick={() => handleNav("home")}
+          onClick={() => handleNav("/")}
         >
           <span className={`text-xl font-bold tracking-tighter ${theme.text}`}>
             Manpreet
@@ -111,11 +115,11 @@ const NavBar = ({ currentView, setView, theme, isDarkMode, toggleTheme }) => {
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-1">
           {navItems.map((item) => {
-            const isActive = currentView === item.view;
+            const isActive = location.pathname === item.path;
             return (
               <MagneticButton
                 key={item.label}
-                onClick={() => handleNav(item.view)}
+                onClick={() => handleNav(item.path)}
                 className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
                   isActive
                     ? `${theme.accentBg} text-white`
@@ -161,11 +165,11 @@ const NavBar = ({ currentView, setView, theme, isDarkMode, toggleTheme }) => {
         >
           <div className="flex flex-col space-y-1">
             {navItems.map((item) => {
-              const isActive = currentView === item.view;
+              const isActive = location.pathname === item.path;
               return (
                 <button
                   key={item.label}
-                  onClick={() => handleNav(item.view)}
+                  onClick={() => handleNav(item.path)}
                   className={`text-left px-4 py-3 rounded-xl font-medium transition-all ${
                     isActive
                       ? `${theme.accentBg} text-white`
