@@ -13,7 +13,7 @@ const WorkPage = ({ theme }) => {
 
   return (
     <div className="pt-40 pb-20 px-6">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* FEATURED SECTION */}
         <FeaturedProjects 
           projects={featuredProjects} 

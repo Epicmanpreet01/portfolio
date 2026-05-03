@@ -21,7 +21,7 @@ const About = ({ isSummary = false, theme, isDarkMode }) => {
     <section
       className={`py-24 px-6 ${isDarkMode ? "bg-black/20" : "bg-white/30"} backdrop-blur-3xl`}
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <Reveal>
           <div className="grid md:grid-cols-12 gap-12 items-start">
             <div className="md:col-span-5 lg:col-span-4">

@@ -12,7 +12,7 @@ const Projects = ({ isSummary = false, theme }) => {
     return (
       <div className="pt-32 pb-20">
         <section className="px-6">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-6xl mx-auto">
             <Reveal>
               <h1 className={`text-5xl font-bold mb-6 ${theme.text}`}>
                 All Projects
@@ -121,7 +121,7 @@ const Projects = ({ isSummary = false, theme }) => {
 
   return (
     <section className="py-32 px-6 overflow-hidden">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <Reveal>
           <div className="flex items-end justify-between mb-20">
             <div>

@@ -54,7 +54,7 @@ const Skills = ({ isSummary = false, theme }) => {
 
   return (
     <section className={`py-32 px-6 ${!isSummary ? "min-h-screen pt-40" : ""}`}>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {isSummary ? (
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
             <Reveal>
@@ -121,7 +121,7 @@ const Skills = ({ isSummary = false, theme }) => {
           <Reveal delay={200}>
             {/* Break out of max-w container to be full viewport width */}
             <div className="relative overflow-hidden py-4 w-screen left-1/2 -translate-x-1/2">
-              <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] space-y-4 px-4">
+              <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] space-y-4 px-4 py-2">
                 <style
                   dangerouslySetInnerHTML={{
                     __html: `

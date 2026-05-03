@@ -80,7 +80,7 @@ const NavBar = ({ theme, isDarkMode, toggleTheme }) => {
         className={`relative flex items-center justify-between h-[52px] overflow-hidden rounded-full border ${theme.navBg} backdrop-blur-xl ${theme.cardBorder} ${
           isHidden
             ? "w-[52px] max-w-[52px] !px-0"
-            : `w-full max-w-7xl px-6 ${
+            : `w-full max-w-6xl px-6 ${
                 scrolled
                   ? "shadow-lg shadow-black/5"
                   : "shadow-sm shadow-black/5"
